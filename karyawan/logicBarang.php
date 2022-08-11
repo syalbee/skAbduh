@@ -6,8 +6,12 @@ if (isset($_POST['simpanBarang'])) {
     editBarang();
 } else if (isset($_POST['idBarangedt'])) {
     simpaneditBarang();
-}  else if(isset($_POST['idHapusbarangs'])){
+} else if (isset($_POST['idHapusbarangs'])) {
     submitHapusbarang();
+} else if (isset($_POST['idHapusbarangs'])) {
+    submitHapusbarang();
+} else if (isset($_POST['btnTbhbarangstok'])) {
+    saveStockbrg();
 }
 
 
@@ -65,7 +69,7 @@ function getBarang()
 {
     include '../database/koneksi.php';
 
-    $query = mysqli_query($koneksi, "SELECT barang.nama_barang, barang.id_barang, supplier.nama_supplier, satuan.`nama` AS satuan, gudang.nama_gudang FROM barang
+    $query = mysqli_query($koneksi, "SELECT barang.nama_barang, barang.stok_barang, barang.id_barang, supplier.nama_supplier, satuan.`nama` AS satuan, gudang.nama_gudang FROM barang
      JOIN supplier ON barang.id_supplier = supplier.id_supplier JOIN satuan ON barang.id_satuan = satuan.`id_satuan`
      JOIN gudang ON barang.id_gudang = gudang.id_gudang");
     if (!$query) {
@@ -115,7 +119,8 @@ function getGudang()
     return $query;
 }
 
-function submitHapusbarang(){
+function submitHapusbarang()
+{
     include '../database/koneksi.php';
 
     $id = $_POST['idHapusbarangs'];
@@ -123,5 +128,29 @@ function submitHapusbarang(){
 
     if (!$hapusBarang) {
         echo "Error: " . $hapusBarang . "<br>" . mysqli_error($koneksi);
+    }
+}
+
+
+function saveStockbrg()
+{
+    include '../database/koneksi.php';
+
+    $idBrg = $_POST['inTbhBarang'];
+    $jumlah = $_POST['inJmlBrgtbh'];
+
+
+    $barang = mysqli_query($koneksi, "INSERT INTO history_barang (id_barang, jenis_transaksi, jumlah) VALUES('$idBrg', 'i', '$jumlah')");
+
+    if ($barang) {
+        $jumlahBrg = mysqli_query($koneksi, "SELECT stok_barang FROM barang WHERE id_barang = '$idBrg'");
+        $stok = mysqli_fetch_array($jumlahBrg);
+        $stok = $stok['stok_barang'] + $jumlah;
+        $update = mysqli_query($koneksi, "UPDATE barang SET stok_barang = '$stok' WHERE id_barang='$idBrg'");
+        if ($update) {
+            header("location:../karyawan/barangmasuk.php");
+        }
+    } else {
+        echo "Error: " . $barang . "<br>" . mysqli_error($koneksi);
     }
 }

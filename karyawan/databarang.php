@@ -40,6 +40,7 @@ include '../template/sidebarKaryawan.php';
                                 <th scope="col">No</th>
                                 <th scope="col">Kode Barang</th>
                                 <th scope="col">Nama Barang</th>
+                                <th scope="col">Stok</th>
                                 <th scope="col">Supplier</th>
                                 <th scope="col">Satuan</th>
                                 <th scope="col">Gudang</th>
@@ -56,6 +57,7 @@ include '../template/sidebarKaryawan.php';
                                     <th scope="row"><?= $i; ?></th>
                                     <td><?= $value['id_barang']; ?></td>
                                     <td><?= $value['nama_barang']; ?></td>
+                                    <td><?= $value['stok_barang']; ?></td>
                                     <td><?= $value['nama_supplier']; ?></td>
                                     <td><?= $value['satuan']; ?></td>
                                     <td><?= $value['nama_gudang']; ?></td>
@@ -131,7 +133,7 @@ include '../template/sidebarKaryawan.php';
                         </select>
                     </div>
 
-                    <button type="button" name="simpanBarang" class="btn btn-primary">Simpan</button>
+                    <button type="submit" name="simpanBarang" class="btn btn-primary">Simpan</button>
                 </form>
             </div>
             <div class="modal-footer">
@@ -142,7 +144,7 @@ include '../template/sidebarKaryawan.php';
 </div>
 
 <!-- Modal Edit Barang -->
-<div class="modal fade" id="mdleditbarang" tabindex="-1" aria-labelledby="mdleditbarang" aria-hidden="true">
+<div class="modal fade" id="mdleditbarang" aria-labelledby="mdleditbarang" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
