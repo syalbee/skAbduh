@@ -59,7 +59,7 @@ include '../template/sidebarKaryawan.php';
 
 </div>
 </div>
-</section>
+</section>  
 
 </div>
 <!-- Modal tambah stok barang -->

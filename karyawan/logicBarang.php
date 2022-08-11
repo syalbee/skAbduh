@@ -12,7 +12,11 @@ if (isset($_POST['simpanBarang'])) {
     submitHapusbarang();
 } else if (isset($_POST['btnTbhbarangstok'])) {
     saveStockbrg();
+} else if (isset($_POST['btnOutbarangstok'])) {
+    outStockbrg();
 }
+
+
 
 
 function saveBarang()
@@ -149,6 +153,29 @@ function saveStockbrg()
         $update = mysqli_query($koneksi, "UPDATE barang SET stok_barang = '$stok' WHERE id_barang='$idBrg'");
         if ($update) {
             header("location:../karyawan/barangmasuk.php");
+        }
+    } else {
+        echo "Error: " . $barang . "<br>" . mysqli_error($koneksi);
+    }
+}
+
+function outStockbrg()
+{
+    include '../database/koneksi.php';
+
+    $idBrg = $_POST['inTbhBarang'];
+    $jumlah = $_POST['inJmlBrgtbh'];
+
+
+    $barang = mysqli_query($koneksi, "INSERT INTO history_barang (id_barang, jenis_transaksi, jumlah) VALUES('$idBrg', 'o', '$jumlah')");
+
+    if ($barang) {
+        $jumlahBrg = mysqli_query($koneksi, "SELECT stok_barang FROM barang WHERE id_barang = '$idBrg'");
+        $stok = mysqli_fetch_array($jumlahBrg);
+        $stok = $stok['stok_barang'] - $jumlah;
+        $update = mysqli_query($koneksi, "UPDATE barang SET stok_barang = '$stok' WHERE id_barang='$idBrg'");
+        if ($update) {
+            header("location:../karyawan/barangkeluar.php");
         }
     } else {
         echo "Error: " . $barang . "<br>" . mysqli_error($koneksi);

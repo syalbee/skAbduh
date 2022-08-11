@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$title = "Barang Masuk";
+$title = "Barang Keluar";
 
 include 'logicBarang.php';
 include '../template/header.php';
@@ -15,7 +15,7 @@ include '../template/sidebarKaryawan.php';
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Data Barang Masuk</h1>
+                    <h1>Data Barang Keluar</h1>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
@@ -26,15 +26,15 @@ include '../template/sidebarKaryawan.php';
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlTambahstok">
-                    Tambah Stok
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlstokKeluar">
+                    Stok Keluar
                 </button>
             </div>
 
             <div class="card-body">
 
                 <div class="container">
-                    <table class="table w-100 table-bordered table-hover" id="tblbarangmasuk">
+                    <table class="table w-100 table-bordered table-hover" id="tblbarangkeluar">
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col">No</th>
@@ -62,12 +62,13 @@ include '../template/sidebarKaryawan.php';
 </section>
 
 </div>
+
 <!-- Modal tambah stok barang -->
-<div class="modal fade" id="mdlTambahstok" aria-labelledby="mdlTambahstok" aria-hidden="true">
+<div class="modal fade" id="mdlstokKeluar" aria-labelledby="mdlstokKeluar" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="mdlTambahstok">Form Tambah Stok Barang</h5>
+                <h5 class="modal-title" id="mdlstokKeluar">Form Tambah Stok Barang</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -91,7 +92,7 @@ include '../template/sidebarKaryawan.php';
                         <input type="text" class="form-control" id="inJmlBrgtbh" name="inJmlBrgtbh">
                     </div>
 
-                    <button type="submit" name="btnTbhbarangstok" class="btn btn-primary">Simpan</button>
+                    <button type="submit" name="btnOutbarangstok" class="btn btn-primary">Simpan</button>
                 </form>
             </div>
 
@@ -108,10 +109,10 @@ include '../template/footer.php';
 
 <script>
     let url,
-        barangMasuk = $("#tblbarangmasuk").DataTable({
+        barangMasuk = $("#tblbarangkeluar").DataTable({
             responsive: !0,
             scrollX: !0,
-            ajax: 'getBarangMasuk.php',
+            ajax: 'getBarangKeluar.php',
             columnDefs: [{
                 searcable: !1,
                 orderable: !1,
@@ -142,7 +143,7 @@ include '../template/footer.php';
         });
 
     $('#inTbhBarang').select2({
-        dropdownParent: $("#mdlTambahstok"),
+        dropdownParent: $("#mdlstokKeluar"),
         theme: 'bootstrap4'
     });
 

@@ -2,18 +2,23 @@
 include '../database/koneksi.php';
 
 header('Content-type: application/json');
+
 $i = 1;
-$barangMasuk = mysqli_query($koneksi, " SELECT history_barang.*, barang.* FROM history_barang JOIN barang ON barang.`id_barang` = history_barang.`id_barang` 
-WHERE jenis_transaksi = 'o' ");
+$barangMasuk = mysqli_query($koneksi, "SELECT SUM(jumlah) AS jumlah, id_barang  FROM history_barang 
+WHERE jenis_transaksi= '$jenis' AND MONTH(tanggal_transaksi) = '$bulan' AND YEAR(tanggal_transaksi) = '$tahun'");
 
 if (!$barangMasuk) {
     echo "Error: " . $barangMasuk . "<br>" . mysqli_error($koneksi);
 }
 
-foreach ($barangMasuk as $brgMasuk) {
+
+$no = 0;
+$bulan = array("", "Januari", "Febuari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+for ($i = 1; $i <= 12; $i++) {
+    $namaBulan = $bulan[$i];
     $data[] = array(
-        'no' => $i++,
-        'id' => $brgMasuk['id_barang'],
+        'no' => $no++,
+        'bulan' => $brgMasuk['id_barang'],
         'nama' => $brgMasuk['nama_barang'],
         'tanggal' => $brgMasuk['tanggal_transaksi'],
         'jumlah' => $brgMasuk['jumlah'],
