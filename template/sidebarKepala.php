@@ -50,7 +50,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="dashboard.php" class="nav-link">
+                    <a href="laporan.php" class="nav-link">
                         <i class="nav-icon fas fa-file-pdf"></i>
                         <p>
                             Laporan
@@ -59,7 +59,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="dashboard.php" class="nav-link">
+                    <a href="perencanaan.php" class="nav-link">
                         <i class="nav-icon fas fa-chart-pie"></i>
                         <p>
                             Perencanaan
