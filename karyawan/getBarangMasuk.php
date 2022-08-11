@@ -17,7 +17,6 @@ foreach ($barangMasuk as $brgMasuk) {
         'nama' => $brgMasuk['nama_barang'],
         'tanggal' => $brgMasuk['tanggal_transaksi'],
         'jumlah' => $brgMasuk['jumlah'],
-        'action' => '<button class="btn btn-sm btn-warning" onclick="detail(\'' . $brgMasuk['id_barang']  . '\')"><i class="fas fa-edit"></i></button> &nbsp; <button class="btn btn-sm btn-primary" onclick="lunas(\'' . $brgMasuk['id_barang'] . '\')"><i class="fas fa-check"></i></button>',
     );
 }
 $dataBarangmasuk = array(

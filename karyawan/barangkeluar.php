@@ -40,9 +40,8 @@ include '../template/sidebarKaryawan.php';
                                 <th scope="col">No</th>
                                 <th scope="col">ID Barang</th>
                                 <th scope="col">Nama Barang</th>
-                                <th scope="col">Tanggal Masuk</th>
+                                <th scope="col">Tanggal Keluar</th>
                                 <th scope="col">Jumlah</th>
-                                <th scope="col">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -135,9 +134,6 @@ include '../template/footer.php';
                 },
                 {
                     data: "jumlah"
-                },
-                {
-                    data: "action"
                 },
             ],
         });
