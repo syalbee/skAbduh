@@ -35,6 +35,8 @@
 
     <script src="https://adminlte.io/themes/v3/dist/js/adminlte.min.js?v=3.2.0"></script>
 
+    <script src="https://adminlte.io/themes/v3/plugins/chart.js/Chart.min.js"></script>
+
     <script>
         $('.select2').select2();
         $('.select2bs4').select2({
