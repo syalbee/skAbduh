@@ -29,9 +29,9 @@
             <div class="card-body">
                 <!-- <p class="login-box-msg">Sign-in Untuk Memulai Sesi</p> -->
                 <?php
-                if (isset($_GET['tidakada'])) {
-                    if ($_GET['tidakada'] == "gagal") {
-                        echo "<div class='alert'><p class='text-danger'>Email tidak terdaftar !</p></div>";
+                if (isset($_GET['beda'])) {
+                    if ($_GET['beda'] == "gagal") {
+                        echo "<div class='alert'><p class='text-danger'>Password 1 dan 2 tidak sesuai !</p></div>";
                     }
                 }
                 ?>
