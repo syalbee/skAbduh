@@ -60,7 +60,7 @@ include '../template/sidebarKaryawan.php';
                                             <?php } ?>
                                         </select>
                                     </div>
-                                    <button type="submit" class="btn btn-warning btn-sm">Tampil</button>
+                                    <button type="button" onclick="getDatatransaksiBarang()" class="btn btn-warning btn-sm">Tampil</button>
                                 </form>
                                 <hr style="border: 1px solid yellow">
                                 <div class="row">
@@ -173,7 +173,9 @@ include '../template/footer.php';
     $('#dataBrgtampil').select2({
         theme: 'bootstrap4'
     });
-    // Get context with jQuery - using jQuery's .get() method.
+
+    var dataMasuk = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    var dataKeluar = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     var areaChartData = {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
         datasets: [{
@@ -185,7 +187,7 @@ include '../template/footer.php';
                 pointStrokeColor: 'rgba(60,141,188,1)',
                 pointHighlightFill: '#fff',
                 pointHighlightStroke: 'rgba(60,141,188,1)',
-                data: [28, 48, 40, 19, 86, 27, 90, 40, 19, 86, 27, 90]
+                data: dataMasuk
             },
             {
                 label: 'Data Barang Keluar',
@@ -196,7 +198,7 @@ include '../template/footer.php';
                 pointStrokeColor: '#c1c7d1',
                 pointHighlightFill: '#fff',
                 pointHighlightStroke: 'rgba(220,220,220,1)',
-                data: [65, 59, 80, 81, 56, 55, 40, 40, 19, 86, 27, 90]
+                data: dataKeluar
             },
         ]
     }
@@ -240,4 +242,63 @@ include '../template/footer.php';
         data: barChartData,
         options: barChartOptions
     })
+
+    function getDatatransaksiBarang() {
+        var a = $('#dataBrgtampil').val();
+        var b = $('#dataThntampil').val();
+
+        // $idBrg, $jenis, $bulan, $tahun
+        for (let i = 1; i <= 12; i++) {
+            console.log(i);
+            getDataJumlahMasuk(a, 'i', i, b);
+            getDataJumlahKeluar(a, 'o', i, b);
+        }
+
+        new Chart(barChartCanvas, {
+            type: 'line',
+            data: barChartData,
+            options: barChartOptions
+        })
+    }
+
+    function getDataJumlahMasuk(a, b, c, d) {
+        $.ajax({
+            url: "logicDashboard.php",
+            type: "post",
+            dataType: "text",
+            data: {
+                idJumlahdashboardmas: a,
+                jenisJumlahdashboardmas: b,
+                bulanJumlahdashboardmas: c,
+                tahunJumlahdashboardmas: d
+            },
+            success: (a) => {
+                dataMasuk[c-1] = a;
+                // console.log(a);
+            },
+            error: (a) => {
+                console.log(a);
+            },
+        });
+    }
+
+    function getDataJumlahKeluar(a, b, c, d) {
+        $.ajax({
+            url: "logicDashboard.php",
+            type: "post",
+            dataType: "text",
+            data: {
+                idJumlahdashboardkel: a,
+                jenisJumlahdashboardkel: b,
+                bulanJumlahdashboardkel: c,
+                tahunJumlahdashboardkel: d
+            },
+            success: (a) => {
+                dataKeluar[c-1] = a;
+            },
+            error: (a) => {
+                console.log(a);
+            },
+        });
+    }
 </script>
