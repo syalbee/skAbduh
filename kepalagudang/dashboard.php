@@ -5,7 +5,7 @@ $title = "Dashboard Karyawan";
 
 include 'logicDashboard.php';
 include '../template/header.php';
-include '../template/sidebarKaryawan.php';
+include '../template/sidebarKepala.php';
 ?>
 
 <!-- Content Wrapper. Contains page content -->
