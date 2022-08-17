@@ -76,7 +76,7 @@ include '../template/sidebarKaryawan.php';
                 <form action="logicBarang.php" method="POST">
                     <div class="form-group">
                         <label for="inTbhBarang">Pilih Barang</label>
-                        <select id="inTbhBarang" class="form-control" name="inTbhBarang">
+                        <select id="inTbhBarang" class="form-control" name="inTbhBarang" required>
                             <?php
                             foreach (getBarang() as $value) {
                             ?>
@@ -87,7 +87,7 @@ include '../template/sidebarKaryawan.php';
 
                     <div class="form-group">
                         <label for="inJmlBrgtbh">Masukan Jumlah</label>
-                        <input type="text" class="form-control" id="inJmlBrgtbh" name="inJmlBrgtbh">
+                        <input type="text" class="form-control" id="inJmlBrgtbh" name="inJmlBrgtbh" required>
                     </div>
 
                     <button type="submit" name="btnTbhbarangstok" class="btn btn-primary">Simpan</button>

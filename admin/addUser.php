@@ -71,7 +71,7 @@ include '../template/sidebarAdmin.php';
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inAlamat">Alamat</label>
-                                <textarea class="form-control" id="inAlamat" name="inAlamat" rows="3"></textarea>
+                                <textarea class="form-control" id="inAlamat" name="inAlamat" rows="3" required></textarea>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>

@@ -255,26 +255,30 @@ include '../template/footer.php';
     }
 
     function simpaneditBarang() {
-        $.ajax({
-            url: "logicBarang.php",
-            type: "post",
-            dataType: "text",
-            data: {
-                idBarangedt: $('#inEdtIDbarang').val(),
-                supplierBarangedt: $("#inSupplieredt").val(),
-                satuanBarangedt: $("#inSatuanedt").val(),
-                gudangBarangedt: $("#inGudangedt").val(),
-                namaBarangedt: $('#inNamaBarangedt').val()
-            },
-            success: (a) => {
-                console.log(a);
-                $('#mdleditbarang').modal('hide');
-                location.reload();
-            },
-            error: (a) => {
-                console.log(a);
-            },
-        });
+        if ($('#inNamaBarangedt').val() == "" || $('#inNamaBarangedt').val() == null) {
+            alert("Perhatikan Kolom Inputan");
+        } else {
+            $.ajax({
+                url: "logicBarang.php",
+                type: "post",
+                dataType: "text",
+                data: {
+                    idBarangedt: $('#inEdtIDbarang').val(),
+                    supplierBarangedt: $("#inSupplieredt").val(),
+                    satuanBarangedt: $("#inSatuanedt").val(),
+                    gudangBarangedt: $("#inGudangedt").val(),
+                    namaBarangedt: $('#inNamaBarangedt').val()
+                },
+                success: (a) => {
+                    console.log(a);
+                    $('#mdleditbarang').modal('hide');
+                    location.reload();
+                },
+                error: (a) => {
+                    console.log(a);
+                },
+            });
+        }
     }
 
 
@@ -300,5 +304,6 @@ include '../template/footer.php';
                 console.log(a);
             },
         });
+
     }
 </script>

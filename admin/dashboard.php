@@ -61,7 +61,13 @@ include '../template/sidebarAdmin.php';
                                         <td><?= $value['no_tlp']; ?></td>
                                         <td><?= $value['alamat']; ?></td>
                                         <td><?= $value['role'] == '2' ? 'Kepala Gudang' : 'Karyawan'; ?></td>
-                                        <td><a class="btn btn-warning btn-sm" href="updateUser.php" role="button">Edt</a>&nbsp;<a class="btn btn-danger btn-sm" href="#" role="button">Hps</a></td>
+                                        <td>
+                                            <form action="updateUser.php" method="POST">
+                                                <button class="btn btn-warning btn-sm" name="btnUpdateuser" value="<?= $value['id_user']; ?>" type="submit">Edt</button>&nbsp;
+                                            </form>
+                                            <button class="btn btn-danger btn-sm" type="button" onclick="hapusUser('<?= $value['id_user']; ?>', '<?= $value['nama']; ?>')">Hps</button>
+                                        </td>
+
                                     </tr>
                             <?php
                                 }
@@ -83,6 +89,55 @@ include '../template/sidebarAdmin.php';
 
 </div>
 
+<!-- Modal Hapus Satuan Barang -->
+<div class="modal fade" id="mdlHpsUser" aria-labelledby="mdlHpsUser" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdlHpsUser"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="idHpsUser">
+                <h3 id="modalTitlehapususer"></h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="submitHapusbarang()" class="btn btn-danger">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php
 include '../template/footer.php';
 ?>
+
+<script>
+    function hapusUser(id, nama) {
+        console.log(nama);
+        $('#mdlHpsUser').modal('show');
+        $('#idHpsUser').val(id);
+        $('#modalTitlehapususer').html('Yakin Hapus Data ' + nama + ' ?');
+    }
+
+    function submitHapusbarang() {
+        $.ajax({
+            url: "logicUpdate.php",
+            type: "post",
+            dataType: "text",
+            data: {
+                idHapusUsers: $('#idHpsUser').val()
+            },
+            success: (a) => {
+                $('#mdlHpsUser').modal('hide');
+                location.reload();
+            },
+            error: (a) => {
+                console.log(a);
+            },
+        });
+    }
+</script>

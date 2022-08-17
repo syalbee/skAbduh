@@ -90,15 +90,15 @@ include '../template/sidebarKepala.php';
                 <form action="logicSupplier.php" method="POST">
                     <div class="form-group">
                         <label for="inNamaSupplier">Masukan Nama Supplier</label>
-                        <input type="text" class="form-control" id="inNamaSupplier" name="inNamaSupplier">
+                        <input type="text" class="form-control" id="inNamaSupplier" name="inNamaSupplier" required>
                     </div>
                     <div class="form-group">
                         <label for="inAlamatSup">Masukan Alamat Supplier</label>
-                        <input type="text" class="form-control" id="inAlamatSup" name="inAlamatSup">
+                        <input type="text" class="form-control" id="inAlamatSup" name="inAlamatSup" required>
                     </div>
                     <div class="form-group">
                         <label for="inNotelpsup">Masukan No Telp Supplier</label>
-                        <input type="text" class="form-control" id="inNotelpsup" name="inNotelpsup">
+                        <input type="text" class="form-control" id="inNotelpsup" name="inNotelpsup" required>
                     </div>
                     <button type="submit" name="simpanSupplier" class="btn btn-primary">Simpan</button>
                 </form>
@@ -122,18 +122,18 @@ include '../template/sidebarKepala.php';
             </div>
             <div class="modal-body">
                 <form>
-                <div class="form-group">
+                    <div class="form-group">
                         <label for="inedtNamaSupplier">Masukan Nama Supplier</label>
-                        <input type="text" class="form-control" id="inedtNamaSupplier" name="inedtNamaSupplier">
+                        <input type="text" class="form-control" id="inedtNamaSupplier" name="inedtNamaSupplier" required>
                         <input type="hidden" id="idedtSupplier" name="idedtSupplier">
                     </div>
                     <div class="form-group">
                         <label for="inedtAlamatSup">Masukan Alamat Supplier</label>
-                        <input type="text" class="form-control" id="inedtAlamatSup" name="inedtAlamatSup">
+                        <input type="text" class="form-control" id="inedtAlamatSup" name="inedtAlamatSup" required>
                     </div>
                     <div class="form-group">
                         <label for="inedtNotelpsup">Masukan No Telp Supplier</label>
-                        <input type="text" class="form-control" id="inedtNotelpsup" name="inedtNotelpsup">
+                        <input type="text" class="form-control" id="inedtNotelpsup" name="inedtNotelpsup" required>
                     </div>
                     <button type="button" onclick="simpaneditsupplier()" class="btn btn-primary">Simpan</button>
                 </form>
@@ -197,24 +197,28 @@ include '../template/footer.php';
     }
 
     function simpaneditsupplier() {
-        $.ajax({
-            url: "logicSupplier.php",
-            type: "post",
-            dataType: "text",
-            data: {
-                simpaneditSupplier: $('#idedtSupplier').val(),
-                namaSimpanSupplier: $('#inedtNamaSupplier').val(),
-                alamatSimpanSupplier: $('#inedtAlamatSup').val(),
-                notelpSimpanSupplier: $('#inedtNotelpsup').val(),
-            },
-            success: (a) => {
-                $('#mdeditSupplier').modal('hide');
-                location.reload();
-            },
-            error: (a) => {
-                console.log(a);
-            },
-        });
+        if ($('#inedtNamaSupplier').val() == "" || $('#inedtAlamatSup').val() == ""  || $('#inedtNotelpsup').val() == "") {
+            alert("Perhatikan Kolom Inputan");
+        } else {
+            $.ajax({
+                url: "logicSupplier.php",
+                type: "post",
+                dataType: "text",
+                data: {
+                    simpaneditSupplier: $('#idedtSupplier').val(),
+                    namaSimpanSupplier: $('#inedtNamaSupplier').val(),
+                    alamatSimpanSupplier: $('#inedtAlamatSup').val(),
+                    notelpSimpanSupplier: $('#inedtNotelpsup').val(),
+                },
+                success: (a) => {
+                    $('#mdeditSupplier').modal('hide');
+                    location.reload();
+                },
+                error: (a) => {
+                    console.log(a);
+                },
+            });
+        }
     }
 
     function hapusSupplier(id, nama) {

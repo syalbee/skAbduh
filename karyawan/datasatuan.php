@@ -87,7 +87,7 @@ include '../template/sidebarKaryawan.php';
                 <form action="logicSatuan.php" method="POST">
                     <div class="form-group">
                         <label for="inSatuan">Masukan Jenis Satuan</label>
-                        <input type="text" class="form-control" id="inSatuan" name="inSatuan">
+                        <input type="text" class="form-control" id="inSatuan" name="inSatuan" required>
                     </div>
                     <button type="submit" name="simpanSatuan" class="btn btn-primary">Simpan</button>
                 </form>
@@ -113,7 +113,7 @@ include '../template/sidebarKaryawan.php';
                 <form>
                     <div class="form-group">
                         <label for="inSatuanedt">Masukan Jenis Satuan</label>
-                        <input type="text" class="form-control" id="inSatuanedt" name="inSatuanedt">
+                        <input type="text" class="form-control" id="inSatuanedt" name="inSatuanedt" required>
                         <input type="hidden" id="inIDsatuanedt">
                     </div>
                     <button type="button" onclick="simpaneditsatuan()" class="btn btn-primary">Simpan</button>
@@ -155,6 +155,7 @@ include '../template/footer.php';
 
 <script>
     function editSatuan(id) {
+
         $.ajax({
             url: "logicSatuan.php",
             type: "post",
@@ -175,22 +176,26 @@ include '../template/footer.php';
     }
 
     function simpaneditsatuan() {
-        $.ajax({
-            url: "logicSatuan.php",
-            type: "post",
-            dataType: "text",
-            data: {
-                simpaneditSatuan: $('#inSatuanedt').val(),
-                idsimpansatuan: $('#inIDsatuanedt').val()
-            },
-            success: (a) => {
-                $('#mdleditsatuan').modal('hide');
-                location.reload();
-            },
-            error: (a) => {
-                console.log(a);
-            },
-        });
+        if ($('#inSatuanedt').val() == "" || $('#inSatuanedt').val() == null) {
+            alert("Perhatikan Kolom Inputan");
+        } else {
+            $.ajax({
+                url: "logicSatuan.php",
+                type: "post",
+                dataType: "text",
+                data: {
+                    simpaneditSatuan: $('#inSatuanedt').val(),
+                    idsimpansatuan: $('#inIDsatuanedt').val()
+                },
+                success: (a) => {
+                    $('#mdleditsatuan').modal('hide');
+                    location.reload();
+                },
+                error: (a) => {
+                    console.log(a);
+                },
+            });
+        }
     }
 
     function hapusSatuan(id, nama) {
