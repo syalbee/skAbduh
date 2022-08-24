@@ -73,7 +73,15 @@
                     </ul>
                 </li>
 
-
+                <li class="nav-item">
+                    <a href="gudang.php" class="nav-link">
+                        <i class="nav-icon fas fa-warehouse"></i>
+                        <p>
+                            Gudang
+                        </p>
+                    </a>
+                </li>
+                
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

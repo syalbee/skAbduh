@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-$title = "Persediaan";
+$title = "Dashboard Produksi";
 
-// include 'logicBarang.php';
+
 include '../template/header.php';
-include '../template/sidebarKepala.php';
+include '../template/sidebarProduksi.php';
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -15,7 +15,7 @@ include '../template/sidebarKepala.php';
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Persediaan</h1>
+                    <h1>Dashboard Produksi</h1>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
@@ -26,19 +26,18 @@ include '../template/sidebarKepala.php';
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                
             </div>
 
             <div class="card-body">
-
                 <div class="container">
-                    <table class="table w-100 table-bordered table-hover" id="tblpersediaan">
+                    <table class="table w-100 table-bordered table-hover" id="tblproduksi">
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">ID Barang</th>
                                 <th scope="col">Nama Barang</th>
-                                <th scope="col">Sisa Barang</th>
+                                <th scope="col">Jumlah Barang</th>
+                                <th scope="col">Gudang</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,42 +58,43 @@ include '../template/sidebarKepala.php';
 
 </div>
 
+
 <?php
 include '../template/footer.php';
 ?>
 
 <script>
-    let url,
-        barangMasuk = $("#tblpersediaan").DataTable({
-            responsive: !0,
-            scrollX: !0,
-            ajax: 'getPersedian.php',
-            columnDefs: [{
-                searcable: !1,
-                orderable: !1,
-                targets: 0
-            }],
-            order: [
-                [1, "asc"]
-            ],
-            columns: [{
-                    data: "no"
-                },
-                {
-                    data: "id"
-                },
-                {
-                    data: "nama"
-                },
-                {
-                    data: "stok"
-                }
-            ],
-        });
-
-    $('#inTbhBarang').select2({
-        dropdownParent: $("#mdlstokKeluar"),
-        theme: 'bootstrap4'
+    $("#tblproduksi").DataTable({
+        responsive: !0,
+        scrollX: !0,
+        ajax: 'logicDashboard.php',
+        columnDefs: [{
+            searcable: !1,
+            orderable: !1,
+            targets: 0
+        }],
+        order: [
+            [1, "asc"]
+        ],
+        columns: [{
+                data: "no"
+            },
+            {
+                data: "id"
+            },
+            {
+                data: "nama"
+            },
+            {
+                data: "stok"
+            },
+            {
+                data: "gudang"
+            },
+        ],
     });
 
+    $('#cariBarangproduksi').select2({
+        theme: 'bootstrap4'
+    });
 </script>

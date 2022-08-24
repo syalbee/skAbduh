@@ -28,42 +28,10 @@ include '../template/sidebarKaryawan.php';
             <div class="card-header">
                 <h3 class="card-title"></h3>
             </div>
+
             <div class="card-body">
                 <div class="container">
-                    <div class="col-md-12">
-                        <div class="card card-warning">
-                            <div class="card-header">
-                                <h3 class="card-title">Grafik Transaksi Barang Perbulan Dalam 1 Tahun</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart">
-                                    <canvas id="lineChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                                </div>
-                                <br>
-                                <form class="form-inline">
-                                    <div class="form-group mb-2">
-                                        <select id="dataBrgtampil" class="form-control form-control-sm">
-                                            <?php
-                                            foreach (getBarang() as $value) {
-                                            ?>
-                                                <option value="<?= $value['id_barang']; ?>"><?= $value['nama_barang']; ?> </option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group mx-sm-3 mb-2">
-                                        <select id="dataThntampil" class="form-control form-control-sm">
-                                            <?php
-                                            for ($i = 1; $i <= 12; $i++) {
-                                                $no++;
-                                            ?>
-                                                <option value="<?= 2019 + $i; ?>"><?= 2019 + $i; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                    <button type="button" onclick="getDatatransaksiBarang()" class="btn btn-warning btn-sm">Tampil</button>
-                                </form>
-                                <hr style="border: 1px solid yellow">
-                                <div class="row">
+                <div class="row">
                                     <div class="col-sm-4">
                                         <div class="card border-dark mb-3" style="max-width: 20rem;">
                                             <div class="card-header bg-transparent border-dark">Stok Barang Minimum</div>
@@ -156,149 +124,20 @@ include '../template/sidebarKaryawan.php';
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
-    </section>
+
+</div>
+
+<div class="card-footer">
+
+</div>
+</div>
+</section>
+
 </div>
 
 <?php
 include '../template/footer.php';
 ?>
-
-<script>
-    $('#dataBrgtampil').select2({
-        theme: 'bootstrap4'
-    });
-
-    var dataMasuk = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    var dataKeluar = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    var areaChartData = {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-        datasets: [{
-                label: 'Data Barang Masuk',
-                backgroundColor: 'rgba(60,141,188,0.9)',
-                borderColor: 'rgba(60,141,188,0.8)',
-                pointRadius: false,
-                pointColor: '#3b8bba',
-                pointStrokeColor: 'rgba(60,141,188,1)',
-                pointHighlightFill: '#fff',
-                pointHighlightStroke: 'rgba(60,141,188,1)',
-                data: dataMasuk
-            },
-            {
-                label: 'Data Barang Keluar',
-                backgroundColor: 'rgba(210, 214, 222, 1)',
-                borderColor: 'rgba(210, 214, 222, 1)',
-                pointRadius: false,
-                pointColor: 'rgba(210, 214, 222, 1)',
-                pointStrokeColor: '#c1c7d1',
-                pointHighlightFill: '#fff',
-                pointHighlightStroke: 'rgba(220,220,220,1)',
-                data: dataKeluar
-            },
-        ]
-    }
-    var areaChartOptions = {
-        maintainAspectRatio: false,
-        responsive: true,
-        legend: {
-            display: false
-        },
-        scales: {
-            xAxes: [{
-                gridLines: {
-                    display: false,
-                }
-            }],
-            yAxes: [{
-                gridLines: {
-                    display: false,
-                }
-            }]
-        }
-    }
-    //-------------
-    //- BAR CHART -
-    //-------------
-    var barChartCanvas = $('#lineChart').get(0).getContext('2d')
-    var barChartData = $.extend(true, {}, areaChartData)
-    var temp0 = areaChartData.datasets[0]
-    var temp1 = areaChartData.datasets[1]
-    barChartData.datasets[0] = temp1
-    barChartData.datasets[1] = temp0
-
-    var barChartOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        datasetFill: false
-    }
-
-    new Chart(barChartCanvas, {
-        type: 'line',
-        data: barChartData,
-        options: barChartOptions
-    })
-
-    function getDatatransaksiBarang() {
-        var a = $('#dataBrgtampil').val();
-        var b = $('#dataThntampil').val();
-
-        // $idBrg, $jenis, $bulan, $tahun
-        for (let i = 1; i <= 12; i++) {
-            console.log(i);
-            getDataJumlahMasuk(a, 'i', i, b);
-            getDataJumlahKeluar(a, 'o', i, b);
-        }
-
-        new Chart(barChartCanvas, {
-            type: 'line',
-            data: barChartData,
-            options: barChartOptions
-        })
-    }
-
-    function getDataJumlahMasuk(a, b, c, d) {
-        $.ajax({
-            url: "logicDashboard.php",
-            type: "post",
-            dataType: "text",
-            data: {
-                idJumlahdashboardmas: a,
-                jenisJumlahdashboardmas: b,
-                bulanJumlahdashboardmas: c,
-                tahunJumlahdashboardmas: d
-            },
-            success: (a) => {
-                dataMasuk[c-1] = a;
-                // console.log(a);
-            },
-            error: (a) => {
-                console.log(a);
-            },
-        });
-    }
-
-    function getDataJumlahKeluar(a, b, c, d) {
-        $.ajax({
-            url: "logicDashboard.php",
-            type: "post",
-            dataType: "text",
-            data: {
-                idJumlahdashboardkel: a,
-                jenisJumlahdashboardkel: b,
-                bulanJumlahdashboardkel: c,
-                tahunJumlahdashboardkel: d
-            },
-            success: (a) => {
-                dataKeluar[c-1] = a;
-            },
-            error: (a) => {
-                console.log(a);
-            },
-        });
-    }
-</script>
