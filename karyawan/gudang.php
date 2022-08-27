@@ -32,7 +32,6 @@ include '../template/sidebarKaryawan.php';
                     <table class="table">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col">No</th>
                                 <th scope="col">Nama Gudang</th>
                                 <th scope="col">Max Kapasitas</th>
                                 <th scope="col">Kapasitas Sekarang</th>
@@ -44,14 +43,13 @@ include '../template/sidebarKaryawan.php';
                         <tbody>
                             <?php
                             $i = 0;
-                            foreach (getGudang() as $value) {
+                            foreach (getGudang($_GET['q']) as $value) {
                                 $i++;
                             ?>
                                 <tr>
-                                    <th scope="row"><?= $i; ?></th>
                                     <td><?= $value['nama_gudang']; ?></td>
                                     <td><?= $value['max_kapasitas']; ?></td>
-                                    <td><?= $value['jumlah']; ?></td>
+                                    <td><?= $value['jumlah'] == NULL ? '0': $value['jumlah']; ?></td>
                                     <td><?= $value['max_kapasitas'] - $value['jumlah']; ?></td>
                                     <td><?= $value['alamat']; ?></td>
                                     <td><button type="button" class="btn btn-warning btn-sm" onclick="editGudang('<?= $value['id_gudang']; ?>')">Edit</button></td>
@@ -75,7 +73,7 @@ include '../template/sidebarKaryawan.php';
 
 </div>
 
-<!-- Modal Edit Satuan Barang -->
+<!-- Modal Edit Gudang -->
 <div class="modal fade" id="mdlEdtGudang" tabindex="-1" aria-labelledby="mdlEdtGudang" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -139,6 +137,7 @@ include '../template/footer.php';
     }
 
     function simpaneditgudang() {
+        console.log("hehe");
         if ($('#inNamaGudang').val() == "" || $('#inMaxKapasitas').val() == "" || $('#inAlamatgudang').val() == "") {
             alert("Perhatikan Kolom Inputan");
         } else {
@@ -147,15 +146,15 @@ include '../template/footer.php';
                 type: "post",
                 dataType: "text",
                 data: {
-                   namaGudang: $('#inNamaGudang').val(),
-                   maxKapaGudang:$('#inMaxKapasitas').val(),
-                   alamatGudang:$('#inAlamatgudang').val(),
-                   idGudang:$('#inIDgudangedt').val(),
+                    namaGudang: $('#inNamaGudang').val(),
+                    maxKapaGudang: $('#inMaxKapasitas').val(),
+                    alamatGudang: $('#inAlamatgudang').val(),
+                    idGudang: $('#inIDgudangedt').val(),
                 },
                 success: (a) => {
                     console.log(a);
-                    // $('#mdleditsatuan').modal('hide');
-                    // location.reload();
+                    $('#mdlEdtGudang').modal('hide');
+                    location.reload();
                 },
                 error: (a) => {
                     console.log(a);

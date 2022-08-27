@@ -32,37 +32,6 @@ include '../template/sidebarKepala.php';
                 <div class="container">
                     <div class="col-md-12">
                         <div class="card card-success">
-                            <div class="card-header">
-                                <h3 class="card-title">Grafik Transaksi Barang Perbulan Dalam 1 Tahun</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart">
-                                    <canvas id="lineChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                                </div>
-                                <br>
-                                <form class="form-inline">
-                                    <div class="form-group mb-2">
-                                        <select id="dataBrgtampil" class="form-control form-control-sm">
-                                            <?php
-                                            foreach (getBarang() as $value) {
-                                            ?>
-                                                <option value="<?= $value['id_barang']; ?>"><?= $value['nama_barang']; ?> </option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group mx-sm-3 mb-2">
-                                        <select id="dataThntampil" class="form-control form-control-sm">
-                                            <?php
-                                            for ($i = 1; $i <= 12; $i++) {
-                                                $no++;
-                                            ?>
-                                                <option value="<?= 2019 + $i; ?>"><?= 2019 + $i; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                    <button type="button" onclick="getDatatransaksiBarang()" class="btn btn-success btn-sm">Tampil</button>
-                                </form>
-                                <hr style="border: 1px solid green">
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <div class="card border-dark mb-3" style="max-width: 20rem;">

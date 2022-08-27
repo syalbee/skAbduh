@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 25, 2022 at 02:24 AM
+-- Generation Time: Aug 12, 2022 at 10:15 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -42,7 +42,7 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`id_barang`, `nama_barang`, `stok_barang`, `stok_aman`, `id_supplier`, `id_gudang`, `id_satuan`) VALUES
-(1, 'Kertas Ivory 300GR', 50, 0, 1, 1, 1),
+(1, 'Kertas Ivory 500GR', 31, 0, 1, 1, 1),
 (3, 'Kertas Buram 70Gr', 14, 0, 1, 1, 2),
 (4, 'kertas sticker', 8, 0, 1, 1, 2);
 
@@ -55,7 +55,6 @@ INSERT INTO `barang` (`id_barang`, `nama_barang`, `stok_barang`, `stok_aman`, `i
 CREATE TABLE `gudang` (
   `id_gudang` int(11) NOT NULL,
   `nama_gudang` varchar(60) DEFAULT NULL,
-  `max_kapasitas` int(11) DEFAULT NULL,
   `alamat` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -63,8 +62,8 @@ CREATE TABLE `gudang` (
 -- Dumping data for table `gudang`
 --
 
-INSERT INTO `gudang` (`id_gudang`, `nama_gudang`, `max_kapasitas`, `alamat`) VALUES
-(1, 'Gudang satu q', 123, 'Gedung A Lantai 1');
+INSERT INTO `gudang` (`id_gudang`, `nama_gudang`, `alamat`) VALUES
+(1, 'Gudang satu ', 'Gedung A Lantai 3');
 
 -- --------------------------------------------------------
 
@@ -75,31 +74,23 @@ INSERT INTO `gudang` (`id_gudang`, `nama_gudang`, `max_kapasitas`, `alamat`) VAL
 CREATE TABLE `history_barang` (
   `id_history` int(11) NOT NULL,
   `id_barang` int(11) DEFAULT NULL,
-  `no_faktur` varchar(20) DEFAULT NULL,
   `jenis_transaksi` char(1) DEFAULT NULL,
-  `tanggal_transaksi` date DEFAULT NULL,
-  `jumlah` double DEFAULT NULL,
-  `id_user` int(11) DEFAULT NULL
+  `tanggal_transaksi` datetime DEFAULT current_timestamp(),
+  `jumlah` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `history_barang`
 --
 
-INSERT INTO `history_barang` (`id_history`, `id_barang`, `no_faktur`, `jenis_transaksi`, `tanggal_transaksi`, `jumlah`, `id_user`) VALUES
-(1, 1, NULL, 'i', '2022-08-11', 3, 3),
-(2, 3, NULL, 'i', '2022-08-11', 5, 3),
-(13, 3, NULL, 'i', '2022-08-11', 9, 3),
-(14, 3, NULL, 'o', '2022-08-11', 2, 3),
-(16, 1, NULL, 'o', '2022-07-15', 3, 3),
-(17, 4, NULL, 'i', '2022-08-11', 10, 3),
-(18, 4, NULL, 'o', '2022-08-11', 2, 3),
-(19, 1, NULL, 'i', '2022-08-17', 0, 3),
-(20, 1, 'FAK101', 'i', '2022-08-25', 12, 3),
-(21, 1, 'FAK102', 'i', '2022-08-19', 13, 3),
-(22, 1, NULL, 'o', NULL, 2, 3),
-(23, 1, 'FAKOUT103', 'o', '2022-08-25', 9, 3),
-(26, 1, 'FAK109', 'i', '2022-08-25', 5, 3);
+INSERT INTO `history_barang` (`id_history`, `id_barang`, `jenis_transaksi`, `tanggal_transaksi`, `jumlah`) VALUES
+(1, 1, 'i', '2022-08-11 11:31:11', 3),
+(2, 3, 'i', '2022-08-11 14:13:47', 5),
+(13, 3, 'i', '2022-08-11 14:33:51', 9),
+(14, 3, 'o', '2022-08-11 14:44:54', 2),
+(16, 1, 'o', '2022-07-15 16:50:07', 3),
+(17, 4, 'i', '2022-08-11 20:10:28', 10),
+(18, 4, 'o', '2022-08-11 20:10:47', 2);
 
 -- --------------------------------------------------------
 
@@ -164,9 +155,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id_user`, `username`, `password`, `nama`, `email`, `no_tlp`, `alamat`, `role`) VALUES
 (1, 'admin', 'admin', 'Admin', '-', '-', '-', '1'),
+(2, 'abduh', '1234', 'Abduh Majid', 'abduhmajid@mail.com', '0897665433121', 'Taman Kopo Indah', '2'),
 (3, 'ujang', '1234', 'Ujang Nagara', 'ujangnagara@mail.com', '0876543214', 'Dipatiukur Sekeloa\r\n', '3'),
-(4, 'majid2', '321', 'Majid Raharjo', 'majid@mail.com', '0897654321121', 'Jl sekeloa Utara', '2'),
-(6, 'kakang', '1234', 'Kakang Izal', 'kakang@mail.com', '098765432121', 'JL Saturnus', '4');
+(4, 'majid', '1234', 'Majid Raharjo', 'majid@mail.com', '0897654321121', 'Jl sekeloa Utara', '3');
 
 --
 -- Indexes for dumped tables
@@ -192,8 +183,7 @@ ALTER TABLE `gudang`
 --
 ALTER TABLE `history_barang`
   ADD PRIMARY KEY (`id_history`),
-  ADD KEY `id_barang` (`id_barang`),
-  ADD KEY `id_user` (`id_user`);
+  ADD KEY `id_barang` (`id_barang`);
 
 --
 -- Indexes for table `satuan`
@@ -233,7 +223,7 @@ ALTER TABLE `gudang`
 -- AUTO_INCREMENT for table `history_barang`
 --
 ALTER TABLE `history_barang`
-  MODIFY `id_history` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_history` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `satuan`
@@ -245,13 +235,13 @@ ALTER TABLE `satuan`
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `id_supplier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_supplier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
@@ -269,8 +259,7 @@ ALTER TABLE `barang`
 -- Constraints for table `history_barang`
 --
 ALTER TABLE `history_barang`
-  ADD CONSTRAINT `history_barang_ibfk_1` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id_barang`),
-  ADD CONSTRAINT `history_barang_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
+  ADD CONSTRAINT `history_barang_ibfk_1` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id_barang`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

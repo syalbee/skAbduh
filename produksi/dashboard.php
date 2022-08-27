@@ -67,7 +67,13 @@ include '../template/footer.php';
     $("#tblproduksi").DataTable({
         responsive: !0,
         scrollX: !0,
-        ajax: 'logicDashboard.php',
+        ajax: {
+            url: 'logicDashboard.php',
+            type: 'POST',
+            data: {
+                idGudang: '<?= $_GET['q']; ?>'
+            }
+        },
         columnDefs: [{
             searcable: !1,
             orderable: !1,

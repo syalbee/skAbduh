@@ -39,9 +39,11 @@ include '../template/sidebarKaryawan.php';
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">ID Barang</th>
+                                <th scope="col">No Faktur</th>
                                 <th scope="col">Nama Barang</th>
                                 <th scope="col">Tanggal Masuk</th>
                                 <th scope="col">Jumlah</th>
+                                <th scope="col">Nama Gudang</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -58,7 +60,7 @@ include '../template/sidebarKaryawan.php';
 
 </div>
 </div>
-</section>  
+</section>
 
 </div>
 <!-- Modal tambah stok barang -->
@@ -75,6 +77,16 @@ include '../template/sidebarKaryawan.php';
             <div class="modal-body">
                 <form action="logicBarang.php" method="POST">
                     <div class="form-group">
+                        <label>Tanggal</label>
+                        <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" name="tglSimpanbrg" data-target="#reservationdate" />
+                            <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="inTbhBarang">Pilih Barang</label>
                         <select id="inTbhBarang" class="form-control" name="inTbhBarang" required>
                             <?php
@@ -85,6 +97,10 @@ include '../template/sidebarKaryawan.php';
                         </select>
                     </div>
 
+                    <div class="form-group">
+                        <label for="inNofakBrg">Masukan No Faktur</label>
+                        <input type="text" class="form-control" id="inNofakBrg" name="inNofakBrg" required>
+                    </div>
                     <div class="form-group">
                         <label for="inJmlBrgtbh">Masukan Jumlah</label>
                         <input type="text" class="form-control" id="inJmlBrgtbh" name="inJmlBrgtbh" required>
@@ -126,6 +142,9 @@ include '../template/footer.php';
                     data: "id"
                 },
                 {
+                    data: "nofak"
+                },
+                {
                     data: "nama"
                 },
                 {
@@ -133,7 +152,10 @@ include '../template/footer.php';
                 },
                 {
                     data: "jumlah"
-                }
+                },
+                {
+                    data: "gudang"
+                },
             ],
         });
 
@@ -142,4 +164,9 @@ include '../template/footer.php';
         theme: 'bootstrap4'
     });
 
+
+    //Date picker
+    $('#reservationdate').datetimepicker({
+        format: 'L'
+    });
 </script>

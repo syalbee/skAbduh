@@ -18,7 +18,7 @@ $cek = mysqli_num_rows($login);
 if ($cek > 0) {
 	$data = mysqli_fetch_assoc($login);
 
-	$_SESSION['iduser'] = $data['id_users'];
+	$_SESSION['iduser'] = $data['id_user'];
 	$_SESSION['nama'] = $data['nama'];
 	$_SESSION['role'] = $data['role'];
 

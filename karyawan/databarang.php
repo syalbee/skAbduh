@@ -128,7 +128,7 @@ include '../template/sidebarKaryawan.php';
                             <?php
                             foreach (getGudang() as $value) {
                             ?>
-                                <option value="<?= $value['id_gudang']; ?>"><?= $value['nama_gudang']; ?> </option>
+                                <option value="<?= $value['id_gudang']; ?>"><?= $value['nama_gudang'] . " | Sisa Kapasitas = " . ($value['max_kapasitas'] - $value['jumlah']); ?> </option>
                             <?php } ?>
                         </select>
                     </div>

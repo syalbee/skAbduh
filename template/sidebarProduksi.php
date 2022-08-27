@@ -16,15 +16,26 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
                 <li class="nav-item">
-                    <a href="dashboard.php" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Home
-                        </p>
+                    <?php
+                    include '../database/koneksi.php';
+
+                    $query = mysqli_query($koneksi, "SELECT id_gudang, nama_gudang FROM gudang");
+                    if (!$query) {
+                        printf("Error: %s\n", mysqli_error($koneksi));
+                        exit();
+                    }
+                    foreach ($query as $gudang) { ?>
+
+                <li class="nav-item">
+                    <a href="dashboard.php?q=<?= $gudang['id_gudang']; ?>" class="nav-link">
+                        <i class="nav-icon fas fa-warehouse"></i>
+                        <p><?= $gudang['nama_gudang']; ?></p>
                     </a>
                 </li>
-
+                     <?php } ?>
+            </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

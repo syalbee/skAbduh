@@ -40,7 +40,7 @@
                                 <p>Data Satuan</p>
                             </a>
                         </li>
-                                                <li class="nav-item">
+                        <li class="nav-item">
                             <a href="databarang.php" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Data Barang</p>
@@ -74,14 +74,32 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="gudang.php" class="nav-link">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-warehouse"></i>
                         <p>
                             Gudang
+                            <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <?php
+                        include '../database/koneksi.php';
+
+                        $query = mysqli_query($koneksi, "SELECT id_gudang, nama_gudang FROM gudang");
+                        if (!$query) {
+                            printf("Error: %s\n", mysqli_error($koneksi));
+                            exit();
+                        }
+                        foreach ($query as $gudang) { ?>
+                            <li class="nav-item">
+                                <a href="gudang.php?q=<?= $gudang['id_gudang']; ?>" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p><?= $gudang['nama_gudang']; ?></p>
+                                </a>
+                            </li>
+                        <?php } ?>
+                    </ul>
                 </li>
-                
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

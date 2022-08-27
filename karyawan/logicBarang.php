@@ -16,9 +16,6 @@ if (isset($_POST['simpanBarang'])) {
     outStockbrg();
 }
 
-
-
-
 function saveBarang()
 {
     include '../database/koneksi.php';
@@ -114,7 +111,7 @@ function getGudang()
 {
     include '../database/koneksi.php';
 
-    $query = mysqli_query($koneksi, "SELECT * FROM gudang");
+    $query = mysqli_query($koneksi, "SELECT gudang.*, SUM(barang.`stok_barang`) AS jumlah FROM gudang JOIN barang ON gudang.`id_gudang` = barang.`id_gudang`");
     if (!$query) {
         printf("Error: %s\n", mysqli_error($koneksi));
         exit();
@@ -139,12 +136,14 @@ function submitHapusbarang()
 function saveStockbrg()
 {
     include '../database/koneksi.php';
-
+    session_start();
     $idBrg = $_POST['inTbhBarang'];
     $jumlah = $_POST['inJmlBrgtbh'];
-
-
-    $barang = mysqli_query($koneksi, "INSERT INTO history_barang (id_barang, jenis_transaksi, jumlah) VALUES('$idBrg', 'i', '$jumlah')");
+    $tgl=date_create($_POST['tglSimpanbrg']);
+    $tgl = date_format($tgl,"Y-m-d");
+    $nofak = $_POST['inNofakBrg'];
+    $idUser = $_SESSION['iduser']; 
+    $barang = mysqli_query($koneksi, "INSERT INTO history_barang (id_barang, no_faktur, jenis_transaksi, tanggal_transaksi, jumlah, id_user) VALUES('$idBrg', '$nofak', 'i', '$tgl','$jumlah', '$idUser')");
 
     if ($barang) {
         $jumlahBrg = mysqli_query($koneksi, "SELECT stok_barang FROM barang WHERE id_barang = '$idBrg'");
@@ -162,12 +161,14 @@ function saveStockbrg()
 function outStockbrg()
 {
     include '../database/koneksi.php';
-
+    session_start();
     $idBrg = $_POST['inTbhBarang'];
     $jumlah = $_POST['inJmlBrgtbh'];
-
-
-    $barang = mysqli_query($koneksi, "INSERT INTO history_barang (id_barang, jenis_transaksi, jumlah) VALUES('$idBrg', 'o', '$jumlah')");
+    $tgl=date_create($_POST['tglSimpanbrg']);
+    $tgl = date_format($tgl,"Y-m-d");
+    $nofak = $_POST['inNofakBrgKLR'];
+    $idUser = $_SESSION['iduser']; 
+    $barang = mysqli_query($koneksi, "INSERT INTO history_barang (id_barang, no_faktur, jenis_transaksi, tanggal_transaksi, jumlah, 'id_user') VALUES('$idBrg', '$nofak', 'o', '$tgl','$jumlah', '$idUser')");
 
     if ($barang) {
         $jumlahBrg = mysqli_query($koneksi, "SELECT stok_barang FROM barang WHERE id_barang = '$idBrg'");

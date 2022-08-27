@@ -1,9 +1,7 @@
 <?php
 session_start();
 
-$title = "Persediaan";
-
-// include 'logicBarang.php';
+$title = "Barang Masuk";
 include '../template/header.php';
 include '../template/sidebarKepala.php';
 ?>
@@ -15,7 +13,7 @@ include '../template/sidebarKepala.php';
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Persediaan</h1>
+                    <h1>Data Barang Masuk</h1>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
@@ -26,20 +24,21 @@ include '../template/sidebarKepala.php';
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                
             </div>
 
             <div class="card-body">
-
                 <div class="container">
-                    <table class="table w-100 table-bordered table-hover" id="tblpersediaan">
+                    <table class="table w-100 table-bordered table-hover" id="tblbarangmasuk">
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">ID Barang</th>
+                                <th scope="col">No Faktur</th>
                                 <th scope="col">Nama Barang</th>
-                                <th scope="col">Sisa Barang</th>
-                                <th scope="col">Lokasi Barang</th>
+                                <th scope="col">Tanggal Masuk</th>
+                                <th scope="col">Jumlah</th>
+                                <th scope="col">Nama Gudang</th>
+                                <th scope="col">Nama Petugas</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,10 +65,10 @@ include '../template/footer.php';
 
 <script>
     let url,
-        barangMasuk = $("#tblpersediaan").DataTable({
+        barangMasuk = $("#tblbarangmasuk").DataTable({
             responsive: !0,
             scrollX: !0,
-            ajax: 'getPersedian.php',
+            ajax: 'getBarangMasuk.php',
             columnDefs: [{
                 searcable: !1,
                 orderable: !1,
@@ -85,20 +84,23 @@ include '../template/footer.php';
                     data: "id"
                 },
                 {
+                    data: "nofak"
+                },
+                {
                     data: "nama"
                 },
                 {
-                    data: "stok"
+                    data: "tanggal"
+                },
+                {
+                    data: "jumlah"
                 },
                 {
                     data: "gudang"
-                }
+                },
+                {
+                    data: "petugas"
+                },
             ],
         });
-
-    $('#inTbhBarang').select2({
-        dropdownParent: $("#mdlstokKeluar"),
-        theme: 'bootstrap4'
-    });
-
 </script>

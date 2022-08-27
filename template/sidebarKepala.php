@@ -33,6 +33,7 @@
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
+
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="persediaan.php" class="nav-link">
@@ -46,7 +47,20 @@
                                 <p>Rekapitulasi Data Barang</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="inBarang.php" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p> Data Barang Masuk</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="outBarang.php" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p> Data Barang Keluar</p>
+                            </a>
+                        </li>
                     </ul>
+
                 </li>
 
                 <li class="nav-item">
@@ -59,21 +73,40 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="perencanaan.php" class="nav-link">
-                        <i class="nav-icon fas fa-chart-pie"></i>
-                        <p>
-                            Perencanaan
-                        </p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
                     <a href="supplier.php" class="nav-link">
                         <i class="nav-icon fas fa-truck"></i>
                         <p>
                             Supplier
                         </p>
                     </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-warehouse"></i>
+                        <p>
+                            Gudang
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <?php
+                        include '../database/koneksi.php';
+
+                        $query = mysqli_query($koneksi, "SELECT id_gudang, nama_gudang FROM gudang");
+                        if (!$query) {
+                            printf("Error: %s\n", mysqli_error($koneksi));
+                            exit();
+                        }
+                        foreach ($query as $gudang) { ?>
+                            <li class="nav-item">
+                                <a href="gudang.php?q=<?= $gudang['id_gudang']; ?>" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p><?= $gudang['nama_gudang']; ?></p>
+                                </a>
+                            </li>
+                        <?php } ?>
+                    </ul>
                 </li>
 
             </ul>
